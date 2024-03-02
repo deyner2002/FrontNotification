@@ -1,0 +1,36 @@
+<p>prueba works! {{name}} y es {{getEdad() < 18  ? "Menor" : "Mayor"}}</p>
+<p>la empresa es: {{empresa.value}}</p>
+<p>la direccion es: {{direccion.value}}</p>
+<app-supprueba></app-supprueba>
+
+introduce la empresa: <input type="text" #empresa>
+
+<br/>
+
+
+<input type="button" value="agregar" (click)="GuardarEmpresa(empresa.value)"/>
+<br>
+introduce la direccion: <input type="text" #direccion (keyup)="0">
+<br/>
+
+
+{{textoCheckbox}}
+<br/>
+prueba binding registrado: <input type="radio" value="si" name="radio1" [checked] = "bindingText" (click)="getAlert($event)">
+<br/>
+prueba binding no registrado: <input type="radio" value="no" name="radio1" [checked] = "bindingTextN" (click)="getAlert($event)">
+<br/>
+
+
+<br>
+ngmodel - introduce la universidad: <input type="text" [(ngModel)]="universidad">
+
+<p>ngmodel - la universidad es: {{universidad}}</p>
+
+<p *ngIf="mostrar" else="nomostrar"> mostrar texto</p>
+
+<ng-template #nomostrar>
+no mostrar texto
+</ng-template>
+
+
