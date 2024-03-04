@@ -1,0 +1,38 @@
+<form class="row g-3" [formGroup]="templateForm">
+    <div class="col-12">
+        <label for="inputName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="inputName" placeholder="Test Template" formControlName="Name">
+    </div>
+    <div class="col-md-6">
+        <label for="inputType" class="form-label">Type</label>
+        <select class="form-select" aria-label="Default select example" id="inputType" formControlName="Type">
+            <option value="1">Email</option>
+            <option value="2">Sms</option>
+            <option value="3">WhatsApp</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label for="From" class="form-label">From</label>
+        <input type="text" class="form-control" id="inputFrom" placeholder="test@test.com / 3024439080" formControlName="From">
+    </div>
+    <div class="col-12">
+        <label for="inputSubject" class="form-label">Subject</label>
+        <input type="text" class="form-control" id="inputSubject" placeholder="This is the subject of the message" formControlName="Subject">
+    </div>
+    <div class="col-md-6">
+        <label for="inputFile" class="form-label">File HTML</label>
+        <input type="file" class="form-control" id="inputFile" formControlName="File" (change)="onFileSelected($event)">
+    </div>
+    <div class="col-md-6">
+        <label for="inputAttachments" class="form-label">Attachments</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="inputAttachments" formControlName="Attachments">
+            <button type="button" class="btn btn-outline-info">
+                Add
+            </button>
+        </div>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-outline-info" (click)="OnSaveTemplate()">  Save Template </button>
+    </div>
+</form>

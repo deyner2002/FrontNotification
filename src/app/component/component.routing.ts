@@ -9,6 +9,7 @@ import { ButtonsComponent } from './buttons/buttons.component';
 import { CardsComponent } from './card/card.component';
 import { TableComponent } from './table/table.component';
 import { PruebaComponent } from './prueba/prueba.component';
+import { TemplateComponent } from './template/template.component';
 
 
 export const ComponentsRoutes: Routes = [
@@ -50,6 +51,10 @@ export const ComponentsRoutes: Routes = [
 			{
 				path: 'prueba',
 				component: PruebaComponent
+			},
+			{
+				path: 'template',
+				component: TemplateComponent
 			}
 		]
 	}

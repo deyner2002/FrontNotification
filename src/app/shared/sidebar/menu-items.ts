@@ -89,5 +89,13 @@ export const ROUTES: RouteInfo[] = [
     class: '',
     extralink: false,
     submenu: []
+  },
+  {
+    path: '/component/template',
+    title: 'Template',
+    icon: 'bi bi-layout-split',
+    class: '',
+    extralink: false,
+    submenu: []
   }
 ];
