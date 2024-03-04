@@ -38,5 +38,6 @@ export class TemplateComponent implements OnInit {
       }
     )
   }
-
+  Cancel(){
+  }
 }

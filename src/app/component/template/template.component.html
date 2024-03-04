@@ -25,14 +25,11 @@
     </div>
     <div class="col-md-6">
         <label for="inputAttachments" class="form-label">Attachments</label>
-        <div class="col-md-6">
-            <input type="text" class="form-control" id="inputAttachments" formControlName="Attachments">
-            <button type="button" class="btn btn-outline-info">
-                Add
-            </button>
-        </div>
+        <input type="text" class="form-control" id="inputAttachments" formControlName="Attachments">
     </div>
-    <div class="col-12">
-        <button type="submit" class="btn btn-outline-info" (click)="OnSaveTemplate()">  Save Template </button>
+    <div class="col-12 text-end">
+        <button type="submit" class="btn btn-outline-danger" text-al (click)="Cancel()">  Cancel </button>
+        <a>&nbsp;&nbsp;&nbsp;</a>
+        <button type="submit" class="btn btn-outline-info" text-al (click)="OnSaveTemplate()">  Save Template </button>
     </div>
 </form>
