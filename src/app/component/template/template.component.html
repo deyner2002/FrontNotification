@@ -1,3 +1,6 @@
+<h4 class="card-title">Create Template</h4>
+<h5 class="card-subtitle text-muted">make your best template</h5>
+<br>
 <form class="row g-3" [formGroup]="templateForm">
     <div class="col-12">
         <label for="inputName" class="form-label">Name</label>
@@ -13,11 +16,13 @@
     </div>
     <div class="col-md-6">
         <label for="From" class="form-label">From</label>
-        <input type="text" class="form-control" id="inputFrom" placeholder="test@test.com / 3024439080" formControlName="From">
+        <input type="text" class="form-control" id="inputFrom" placeholder="test@test.com / 3024439080"
+            formControlName="From">
     </div>
     <div class="col-12">
         <label for="inputSubject" class="form-label">Subject</label>
-        <input type="text" class="form-control" id="inputSubject" placeholder="This is the subject of the message" formControlName="Subject">
+        <input type="text" class="form-control" id="inputSubject" placeholder="This is the subject of the message"
+            formControlName="Subject">
     </div>
     <div class="col-md-6">
         <label for="inputFile" class="form-label">File HTML</label>
@@ -28,8 +33,8 @@
         <input type="text" class="form-control" id="inputAttachments" formControlName="Attachments">
     </div>
     <div class="col-12 text-end">
-        <button type="submit" class="btn btn-outline-danger" text-al (click)="Cancel()">  Cancel </button>
+        <button type="submit" class="btn btn-outline-danger" text-al (click)="Cancel()"> Cancel </button>
         <a>&nbsp;&nbsp;&nbsp;</a>
-        <button type="submit" class="btn btn-outline-info" text-al (click)="OnSaveTemplate()">  Save Template </button>
+        <button type="submit" class="btn btn-outline-info" text-al (click)="OnSaveTemplate()"> Save Template </button>
     </div>
 </form>

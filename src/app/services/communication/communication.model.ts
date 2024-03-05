@@ -1,8 +1,9 @@
 export interface Template{
-    /*Name: string,
-    Type: number,
-    From: string,
-    Subject: string,*/
-    File : File,
-    //Attachments: string
+    numberId : number,
+    name: string,
+    channel: number,
+    sender: string,
+    subject: string,
+    file : File,
+    attachments: string
 }

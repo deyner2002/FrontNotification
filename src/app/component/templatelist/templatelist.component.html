@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Template List</h4>
+                <h5 class="card-subtitle text-muted">these are your templates</h5>
+                <div class="table-responsive">
+                    <table class="table align-middle text-nowrap">
+                        <thead>
+                            <tr>
+                                <th class="text-dark font-medium fs-4">Number</th>
+                                <th class="text-dark font-medium fs-4">Name</th>
+                                <th class="text-dark font-medium fs-4">Type</th>
+                                <th class="text-dark font-medium fs-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor='let template of templates'>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="ms-3">
+                                            <h5 class="mb-0 font-medium">{{template.numberId}}</h5>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="fs-4">{{template.name}}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="ms-3">
+                                            <h5 class="mb-0 font-medium">{{template.channel}}</h5>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <img src="assets/images/common/editar.png" alt="delete" width="40" class="rounded-circle" (click)="modifyTemplate(template)">
+                                    <img src="assets/images/common/eliminar.png" alt="delete" width="40" class="rounded-circle" (click)="deleteTemplate(template.numberId)">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

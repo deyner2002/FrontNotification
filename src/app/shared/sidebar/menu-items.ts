@@ -51,14 +51,6 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
-    path: '/component/pagination',
-    title: 'Pagination',
-    icon: 'bi bi-dice-1',
-    class: '',
-    extralink: false,
-    submenu: []
-  },
-  {
     path: '/component/nav',
     title: 'Nav',
     icon: 'bi bi-pause-btn',
@@ -93,6 +85,14 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/component/template',
     title: 'Template',
+    icon: 'bi bi-layout-split',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/component/templatelist',
+    title: 'Templates',
     icon: 'bi bi-layout-split',
     class: '',
     extralink: false,

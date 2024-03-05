@@ -12,17 +12,22 @@ export class CommunicationService {
 
   constructor(private http: HttpClient) { }
 
-  getTemplateById(id: number): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}GetTemplate`,{ Id: id });
-  };
-
   saveTemplate(formData: any,file: File): Observable<any> {
     const fileData: FormData = new FormData();
     fileData.append('archivo', file, file.name);
     return this.http.post<any>(`${this.API_URL}SaveTemplate?Name=${formData.Name}&Sender=${formData.From}&Channel=${formData.Type}&Subject=${formData.Subject}&attachments=${formData.Attachments}`, fileData);
   };
 
-   getTemplate(): Observable<any> {
-    return this.http.get<any>(`${this.API_URL}GetTemplate`);
+  getTemplates(): Observable<Template[]> {
+    return this.http.post<Template[]>(`${this.API_URL}GetTemplates`, null);
   };
+
+  deleteTemplate(templateId: number) {
+    return this.http.post(`${this.API_URL}DeleteTemplate?Id=${templateId}`, null);
+  }
+
+  getTemplateById(id: number): Observable<any> {
+    return this.http.post<any>(`${this.API_URL}GetTemplate`,{ Id: id });
+  };
+
 }
