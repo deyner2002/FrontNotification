@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Template, Channel } from '../../services/communication/communication.model';
 import { CommunicationService } from '../../services/communication/communication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-template',
@@ -8,6 +10,12 @@ import { CommunicationService } from '../../services/communication/communication
   styleUrls: ['./template.component.scss']
 })
 export class TemplateComponent implements OnInit {
+  templateEdit: Template = {} as Template;
+  templates: Template[] = [];
+  disabledProperties = true;
+  showTable = true;
+  showCreate = false;
+  showEdit = false;
   file: File | undefined;
   data: any;
   templateForm = new FormGroup({
@@ -15,29 +23,131 @@ export class TemplateComponent implements OnInit {
     Type: new FormControl('', Validators.required),
     From: new FormControl('', Validators.required),
     Subject: new FormControl('', Validators.required),
-    File : new FormControl('', Validators.required),
     Attachments: new FormControl(''),
+    NumberId: new FormControl(),
   })
 
-  constructor(private communicationService: CommunicationService ) { }
+  constructor(private communicationService: CommunicationService, private router: Router ) { }
 
   ngOnInit(): void {
+    this.showTable = true;
+    this.showEdit = false;
+    this.showCreate = false;
+    this.getTemplates();
   }
+
+  getTemplates(){
+    this.communicationService.getTemplates().subscribe(templates => {
+      console.log(templates);
+      this.templates = templates;
+    });
+  }
+
+  saveTemplate() {
+    if(this.file){
+      this.communicationService.saveTemplate(this.templateForm.value, this.file).subscribe(
+        (Response)=>{
+          alert("Template saved successfully!");
+          this.templateForm.reset();
+          this.file = undefined;
+          return Response;
+        },
+        (error)=>{
+          return error;
+        }
+      )
+      setTimeout(() => {
+        this.getTemplates();
+        this.showTableTemplates();
+      }, 2000); 
+    }
+  }
+
+  deleteTemplate(numberId: number) {
+    const isConfirmed = confirm("Are you sure you want to delete this template?");
+    if (isConfirmed) {
+      this.communicationService.deleteTemplate(numberId).subscribe(
+        response => {
+        },
+        error => {
+          console.error("Error al eliminar el template:", error);
+        }
+      );
+      const index = this.templates.findIndex(template => template.numberId === numberId);
+      if (index !== -1) {
+        this.templates.splice(index, 1);
+      }
+    }
+  }
+
+  editTemplate(){
+    if(this.file){
+      this.communicationService.editTemplate(this.templateForm.value, this.file).subscribe(
+        (Response)=>{
+          this.templateForm.reset();
+          this.file = undefined;
+          return Response;
+        },
+        (error)=>{
+          return error;
+        }
+      )
+      setTimeout(() => {
+        this.getTemplates();
+        this.showTableTemplates();
+      }, 2000); 
+    }
+  }
+
   onFileSelected(event: any) {
     this.file = event.target.files[0];
   }
-  OnSaveTemplate() {
-    debugger;
-    if(this.file)
-    this.communicationService.saveTemplate(this.templateForm.value, this.file).subscribe(
-      (Response)=>{
-        return Response;
-      },
-      (error)=>{
-        return error;
-      }
-    )
+
+  getChannelName(channel: Channel): string {
+    return Channel[channel];
   }
-  Cancel(){
+
+  showTableTemplates(){
+    this.showTable = true;
+    this.showEdit = false;
+    this.showCreate = false;
+  }
+
+  showFormCreate() {
+    this.showTable = false;
+    this.showEdit = false;
+    this.showCreate = true;
+    this.templateForm.reset();
+  }
+
+  showFormEdit(id: number){
+    this.showTable = false;
+    this.showEdit = true;
+    this.showCreate = false;
+    this.communicationService.getTemplateById(id).subscribe(template => {
+      this.templateEdit = template;
+      this.templateForm.setValue({
+        'Name': this.templateEdit.name,
+        'Subject': this.templateEdit.subject,
+        'Type': this.templateEdit.channel.toString(),
+        'From': this.templateEdit.sender,
+        'Attachments': this.templateEdit.attachments,
+        'NumberId': this.templateEdit.numberId
+      });
+      const blob = new Blob([this.templateEdit.body], { type: 'text/html' });
+      this.file = new File([blob],`${this.templateEdit.name}.html`, { type: 'text/html' });
+    });
+  }
+
+  generateFileBody() {
+    const blob = new Blob([this.templateEdit.body], { type: 'text/html' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${this.templateEdit.name}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
   }
 }

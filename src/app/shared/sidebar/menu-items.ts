@@ -68,7 +68,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/about',
-    title: 'About',
+    title: 'Profile',
     icon: 'bi bi-people',
     class: '',
     extralink: false,
@@ -84,14 +84,6 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/component/template',
-    title: 'Template',
-    icon: 'bi bi-layout-split',
-    class: '',
-    extralink: false,
-    submenu: []
-  },
-  {
-    path: '/component/templatelist',
     title: 'Templates',
     icon: 'bi bi-layout-split',
     class: '',

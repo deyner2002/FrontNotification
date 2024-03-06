@@ -18,7 +18,7 @@ const routes: Routes = [
       urls: [{ title: "Dashboard", url: "/dashboard" }, { title: "Dashboard" }],
     },
     component: DashboardComponent,
-  },
+  }
 ];
 
 @NgModule({

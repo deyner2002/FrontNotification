@@ -10,8 +10,6 @@ import { CardsComponent } from './card/card.component';
 import { TableComponent } from './table/table.component';
 import { PruebaComponent } from './prueba/prueba.component';
 import { TemplateComponent } from './template/template.component';
-import { TemplatelistComponent } from './templatelist/templatelist.component';
-
 
 export const ComponentsRoutes: Routes = [
 	{
@@ -56,10 +54,6 @@ export const ComponentsRoutes: Routes = [
 			{
 				path: 'template',
 				component: TemplateComponent
-			},
-			{
-				path: 'templatelist',
-				component: TemplatelistComponent
 			}
 		]
 	}

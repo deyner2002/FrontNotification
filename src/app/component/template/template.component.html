@@ -1,40 +1,180 @@
-<h4 class="card-title">Create Template</h4>
-<h5 class="card-subtitle text-muted">make your best template</h5>
-<br>
-<form class="row g-3" [formGroup]="templateForm">
-    <div class="col-12">
-        <label for="inputName" class="form-label">Name</label>
-        <input type="text" class="form-control" id="inputName" placeholder="Test Template" formControlName="Name">
+<div *ngIf="showCreate">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Create Template</h4>
+                    <h5 class="card-subtitle text-muted">make your best template</h5>
+                    <br>
+                    <form class="row g-3" [formGroup]="templateForm">
+                        <div class="col-12">
+                            <label for="inputName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="inputName" placeholder="Test Template"
+                                formControlName="Name">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputType" class="form-label">Type</label>
+                            <select class="form-select" aria-label="Default select example" id="inputType"
+                                formControlName="Type">
+                                <option value="0">Email</option>
+                                <option value="1">Sms</option>
+                                <option value="2">WhatsApp</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="From" class="form-label">From</label>
+                            <input type="text" class="form-control" id="inputFrom"
+                                placeholder="test@test.com / 3024439080" formControlName="From">
+                        </div>
+                        <div class="col-12">
+                            <label for="inputSubject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="inputSubject"
+                                placeholder="This is the subject of the message" formControlName="Subject">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputFile" class="form-label">File HTML</label>
+                            <input type="file" class="form-control" id="inputFile"
+                                (change)="onFileSelected($event)">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputAttachments" class="form-label">Attachments</label>
+                            <input type="text" class="form-control" id="inputAttachments" formControlName="Attachments">
+                        </div>
+                        <div class="col-12 text-end">
+                            <button type="submit" class="btn btn-outline-danger" text-al (click)="showTableTemplates()"> Cancel
+                            </button>
+                            <a>&nbsp;&nbsp;&nbsp;</a>
+                            <button type="submit" class="btn btn-outline-info" text-al (click)="saveTemplate()"> Save
+                                Template
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6">
-        <label for="inputType" class="form-label">Type</label>
-        <select class="form-select" aria-label="Default select example" id="inputType" formControlName="Type">
-            <option value="1">Email</option>
-            <option value="2">Sms</option>
-            <option value="3">WhatsApp</option>
-        </select>
+</div>
+
+<div *ngIf="showTable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-body d-flex justify-content-between align-items-start">
+                        <div>
+                            <h4 class="card-title">Template List</h4>
+                            <h5 class="card-subtitle text-muted">These are your templates</h5>
+                        </div>
+                        <div>
+                            <img src="assets/images/common/add.png" alt="create" width="40" class="rounded-circle"
+                                (click)="showFormCreate()">
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="text-dark font-medium fs-4">Number</th>
+                                    <th class="text-dark font-medium fs-4">Name</th>
+                                    <th class="text-dark font-medium fs-4">Type</th>
+                                    <th class="text-dark font-medium fs-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor='let template of templates'>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="ms-3">
+                                                <h5 class="mb-0 font-medium">{{template.numberId}}</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="fs-4">{{template.name}}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="ms-3">
+                                                <h5 class="mb-0 font-medium">{{ getChannelName(template.channel) }}</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img src="assets/images/common/edit.png" alt="edit" width="40"
+                                            class="rounded-circle" (click)="showFormEdit(template.numberId)">
+                                        <img src="assets/images/common/delete.png" alt="delete" width="40"
+                                            class="rounded-circle" (click)="deleteTemplate(template.numberId)">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6">
-        <label for="From" class="form-label">From</label>
-        <input type="text" class="form-control" id="inputFrom" placeholder="test@test.com / 3024439080"
-            formControlName="From">
+</div>
+
+
+<div *ngIf="showEdit">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Edit Template</h4>
+                    <h5 class="card-subtitle text-muted">improve your template</h5>
+                    <br>
+                    <form class="row g-3" [formGroup]="templateForm">
+                        <div class="col-12">
+                            <label for="inputName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="inputName" placeholder="Test Template"
+                                formControlName="Name" disabled="disabledProperties">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputType" class="form-label">Type</label>
+                            <select class="form-select" aria-label="Default select example" id="inputType"
+                                formControlName="Type" [disabled]="false" disabled="disabledProperties">
+                                <option value="0">Email</option>
+                                <option value="1">Sms</option>
+                                <option value="2">WhatsApp</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="From" class="form-label">From</label>
+                            <input type="text" class="form-control" id="inputFrom"
+                                placeholder="test@test.com / 3024439080" formControlName="From">
+                        </div>
+                        <div class="col-12">
+                            <label for="inputSubject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="inputSubject"
+                                placeholder="This is the subject of the message" formControlName="Subject">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputFile" class="form-label">File HTML</label>
+                            <input type="file" id="inputFile" class="form-control"
+                                (change)="onFileSelected($event)">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputAttachments" class="form-label">Attachments</label>
+                            <input type="text" class="form-control" id="inputAttachments" formControlName="Attachments">
+                        </div>
+                        <div class="card-body d-flex justify-content-between align-items-start">
+                            <div>
+                                <button type="submit" class="btn btn-outline-info" text-al (click)="generateFileBody()">Download body file</button>
+                                <img src="assets/images/common/html.png" alt="html" width="40">
+                            </div>
+                            <div>
+                                <div class="col-12 text-end">
+                                    <button type="submit" class="btn btn-outline-danger" text-al (click)="showTableTemplates()"> Cancel
+                                    </button>
+                                    <a>&nbsp;&nbsp;&nbsp;</a>
+                                    <button type="submit" class="btn btn-outline-info" text-al (click)="editTemplate()"> Save
+                                        Template
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-12">
-        <label for="inputSubject" class="form-label">Subject</label>
-        <input type="text" class="form-control" id="inputSubject" placeholder="This is the subject of the message"
-            formControlName="Subject">
-    </div>
-    <div class="col-md-6">
-        <label for="inputFile" class="form-label">File HTML</label>
-        <input type="file" class="form-control" id="inputFile" formControlName="File" (change)="onFileSelected($event)">
-    </div>
-    <div class="col-md-6">
-        <label for="inputAttachments" class="form-label">Attachments</label>
-        <input type="text" class="form-control" id="inputAttachments" formControlName="Attachments">
-    </div>
-    <div class="col-12 text-end">
-        <button type="submit" class="btn btn-outline-danger" text-al (click)="Cancel()"> Cancel </button>
-        <a>&nbsp;&nbsp;&nbsp;</a>
-        <button type="submit" class="btn btn-outline-info" text-al (click)="OnSaveTemplate()"> Save Template </button>
-    </div>
-</form>
+</div>
