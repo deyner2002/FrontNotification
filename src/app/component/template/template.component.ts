@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Template, Channel } from '../../services/communication/communication.model';
 import { CommunicationService } from '../../services/communication/communication.service';
 import { Router } from '@angular/router';
+import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog } from '@angular/material/dialog';
 import { RendermodalComponent } from '../rendermodal/rendermodal.component';
 
@@ -20,6 +21,9 @@ export class TemplateComponent implements OnInit {
   showEdit = false;
   file: File | undefined;
   data: any;
+  totalItems = 0;
+  page = 1;
+  itemsPerPage = 5;
   templateForm = new FormGroup({
     Name: new FormControl('', Validators.required),
     Type: new FormControl('', Validators.required),
@@ -29,39 +33,51 @@ export class TemplateComponent implements OnInit {
     NumberId: new FormControl(),
   })
 
-  constructor(private communicationService: CommunicationService, private router: Router/*, public dialog: MatDialog*/) { }
+  constructor(private communicationService: CommunicationService,
+    private router: Router,
+    /*, public dialog: MatDialog*/
+    private config: NgbPaginationConfig,
+  ) {
+    config.pageSize = this.itemsPerPage;
+  }
 
   ngOnInit(): void {
     this.showTable = true;
     this.showEdit = false;
     this.showCreate = false;
-    this.getTemplates();
+    this.getTemplates(this.page);
   }
 
-  getTemplates(){
+  getTemplates(page: number) {
     this.communicationService.getTemplates().subscribe(templates => {
-      console.log(templates);
       this.templates = templates;
+      this.totalItems = templates.length;
+      const startIndex = (this.page - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.templates.length);
+    this.templates = this.templates.slice(startIndex, endIndex);
+    while (this.templates.length < 5) {
+      this.templates.push({} as Template);
+    }
     });
   }
 
   saveTemplate() {
-    if(this.file){
+    if (this.file) {
       this.communicationService.saveTemplate(this.templateForm.value, this.file).subscribe(
-        (Response)=>{
+        (Response) => {
           alert("Template saved successfully!");
           this.templateForm.reset();
           this.file = undefined;
           return Response;
         },
-        (error)=>{
+        (error) => {
           return error;
         }
       )
       setTimeout(() => {
-        this.getTemplates();
+        this.getTemplates(this.page);
         this.showTableTemplates();
-      }, 2000); 
+      }, 2000);
     }
   }
 
@@ -82,22 +98,22 @@ export class TemplateComponent implements OnInit {
     }
   }
 
-  editTemplate(){
-    if(this.file){
+  editTemplate() {
+    if (this.file) {
       this.communicationService.editTemplate(this.templateForm.value, this.file).subscribe(
-        (Response)=>{
+        (Response) => {
           this.templateForm.reset();
           this.file = undefined;
           return Response;
         },
-        (error)=>{
+        (error) => {
           return error;
         }
       )
       setTimeout(() => {
-        this.getTemplates();
+        this.getTemplates(this.page);
         this.showTableTemplates();
-      }, 2000); 
+      }, 2000);
     }
   }
 
@@ -109,7 +125,7 @@ export class TemplateComponent implements OnInit {
     return Channel[channel];
   }
 
-  showTableTemplates(){
+  showTableTemplates() {
     this.showTable = true;
     this.showEdit = false;
     this.showCreate = false;
@@ -122,7 +138,7 @@ export class TemplateComponent implements OnInit {
     this.templateForm.reset();
   }
 
-  showFormEdit(id: number){
+  showFormEdit(id: number) {
     this.showTable = false;
     this.showEdit = true;
     this.showCreate = false;
@@ -137,7 +153,7 @@ export class TemplateComponent implements OnInit {
         'NumberId': this.templateEdit.numberId
       });
       const blob = new Blob([this.templateEdit.body], { type: 'text/html' });
-      this.file = new File([blob],`${this.templateEdit.name}.html`, { type: 'text/html' });
+      this.file = new File([blob], `${this.templateEdit.name}.html`, { type: 'text/html' });
     });
   }
 
@@ -165,4 +181,5 @@ export class TemplateComponent implements OnInit {
       console.error('El código HTML es nulo.');
     }
   }
+
 }

@@ -35,9 +35,9 @@
             .sidebar-item {
               &.active {
                 > .sidebar-link {
-                  color: $danger;
+                  color: $info;
                   i {
-                    color: $danger;
+                    color: $info;
                   }
                 }
               }

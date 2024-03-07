@@ -1,7 +1,14 @@
 import { RouteInfo } from './sidebar.metadata';
 
 export const ROUTES: RouteInfo[] = [
- 
+  {
+    path: '',
+    title: '',
+    icon: '',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
   {
     path: '/dashboard',
     title: 'Dashboard',
@@ -67,6 +74,14 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
+    path: '/component/template',
+    title: 'Templates',
+    icon: 'bi bi-layout-split',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
     path: '/about',
     title: 'Profile',
     icon: 'bi bi-people',
@@ -74,20 +89,12 @@ export const ROUTES: RouteInfo[] = [
     extralink: false,
     submenu: []
   },
-  {
+  /*{
     path: '/component/prueba',
     title: 'Prueba',
     icon: 'bi bi-layout-split',
     class: '',
     extralink: false,
     submenu: []
-  },
-  {
-    path: '/component/template',
-    title: 'Templates',
-    icon: 'bi bi-layout-split',
-    class: '',
-    extralink: false,
-    submenu: []
-  }
+  },*/
 ];
