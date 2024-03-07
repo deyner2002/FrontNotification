@@ -15,6 +15,7 @@ import { TableComponent } from "./table/table.component";
 import { PruebaComponent } from './prueba/prueba.component';
 import { SuppruebaComponent } from './supprueba/supprueba.component';
 import { TemplateComponent } from './template/template.component';
+import { RendermodalComponent } from './rendermodal/rendermodal.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { TemplateComponent } from './template/template.component';
     TableComponent,
     PruebaComponent,
     SuppruebaComponent,
-    TemplateComponent
+    TemplateComponent,
+    RendermodalComponent
   ]
 })
 export class ComponentsModule { }

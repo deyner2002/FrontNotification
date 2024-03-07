@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Template, Channel } from '../../services/communication/communication.model';
 import { CommunicationService } from '../../services/communication/communication.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { RendermodalComponent } from '../rendermodal/rendermodal.component';
 
 @Component({
   selector: 'app-template',
@@ -27,7 +29,7 @@ export class TemplateComponent implements OnInit {
     NumberId: new FormControl(),
   })
 
-  constructor(private communicationService: CommunicationService, private router: Router ) { }
+  constructor(private communicationService: CommunicationService, private router: Router/*, public dialog: MatDialog*/) { }
 
   ngOnInit(): void {
     this.showTable = true;
@@ -149,5 +151,18 @@ export class TemplateComponent implements OnInit {
     a.click();
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
+  }
+
+  openPopup() {
+    if (this.templateEdit.body !== null) {
+      const ventanaEmergente = window.open('', '_blank');
+      if (ventanaEmergente) {
+        ventanaEmergente.document.write(this.templateEdit.body);
+      } else {
+        console.error('No se pudo abrir la ventana emergente.');
+      }
+    } else {
+      console.error('El código HTML es nulo.');
+    }
   }
 }
