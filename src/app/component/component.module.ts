@@ -16,6 +16,7 @@ import { PruebaComponent } from './prueba/prueba.component';
 import { SuppruebaComponent } from './supprueba/supprueba.component';
 import { TemplateComponent } from './template/template.component';
 import { RendermodalComponent } from './rendermodal/rendermodal.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { RendermodalComponent } from './rendermodal/rendermodal.component';
     PruebaComponent,
     SuppruebaComponent,
     TemplateComponent,
-    RendermodalComponent
+    RendermodalComponent,
+    NotificationComponent
   ]
 })
 export class ComponentsModule { }

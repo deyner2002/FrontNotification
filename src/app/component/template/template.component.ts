@@ -53,11 +53,11 @@ export class TemplateComponent implements OnInit {
       this.templates = templates;
       this.totalItems = templates.length;
       const startIndex = (this.page - 1) * this.itemsPerPage;
-    const endIndex = Math.min(startIndex + this.itemsPerPage, this.templates.length);
-    this.templates = this.templates.slice(startIndex, endIndex);
-    while (this.templates.length < 5) {
-      this.templates.push({} as Template);
-    }
+      const endIndex = Math.min(startIndex + this.itemsPerPage, this.templates.length);
+      this.templates = this.templates.slice(startIndex, endIndex);
+      while (this.templates.length < 5) {
+        this.templates.push({} as Template);
+      }
     });
   }
 

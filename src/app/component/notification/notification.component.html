@@ -1,0 +1,140 @@
+<div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title" style="font-size: 25px;">Create Notification</h4>
+                    <h5 class="card-subtitle text-muted" style="font-size: 20px;">Schedule your notifications and get
+                        great reach</h5>
+                    <br>
+                    <form class="row g-3" [formGroup]="notificationForm">
+                        <div class="col-md-4">
+                            <label for="inputtemplate" class="form-label">Template</label>
+                            <select class="form-select" aria-label="Default select example" id="inputtemplate"
+                                formControlName="templateId">
+                                <option *ngFor="let tenplate of templates" [value]="tenplate.numberId">{{ tenplate.name
+                                    }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputType" class="form-label">Contact Type</label>
+                            <select class="form-select" aria-label="Default select example" id="inputType"
+                                formControlName="contactType" (change)="enableContactInfo($event)">
+                                <option value="0">Excel file</option>
+                                <option value="1">Specify</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputType" class="form-label">Programmed</label>
+                            <select class="form-select" aria-label="Default select example" id="inputType"
+                                formControlName="isProgrammed" (change)="enableProgrammingInfo($event)">
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-8 col-md-8">
+                            <div class="card">
+                                <form class="row g-3" [formGroup]="contactInfoForm">
+                                    <div class="col-me-3">
+                                        <div *ngIf="!enableFileExcel">
+                                            <br>
+                                            <label for="StarDate" class="form-label">&nbsp; Name</label>
+                                            <input type="text" class="form-control" id="inputName"
+                                                placeholder="Contact Name" formControlName="name">
+                                            <br>
+                                            <label for="StarDate" class="form-label">&nbsp; Email</label>
+                                            <input type="text" class="form-control" id="inputemail"
+                                                placeholder="destination@example.com" formControlName="email">
+                                            <br>
+                                            <label for="EndDate" class="form-label">&nbsp; Phone</label>
+                                            <input type="text" class="form-control" id="inputphone"
+                                                placeholder="3021234567" formControlName="phone">
+                                            <br>
+                                        </div>
+                                        <div *ngIf="enableFileExcel">
+                                            <label for="inputFile" class="form-label">&nbsp; Excel file</label>
+                                            <input type="file" class="form-control" id="inputFile"
+                                                (change)="onFileSelected($event)">
+                                            <br>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card">
+                                <div class="col-me-3">
+                                    <div>
+                                        <br>
+                                        <span>&nbsp; Api Rest - Get method <input type="checkbox" value="true"
+                                                name="isRecurring" formControlName="getObject"
+                                                (change)="enableUrlObject($event)"></span>
+                                        <br>
+                                        <p></p>
+                                        <label *ngIf="enableUrl" for="StarDate" class="form-label">&nbsp; Url</label>
+                                        <input *ngIf="enableUrl" type="text" class="form-control" id="inputgetObjectUrl"
+                                            placeholder="https://localhost:7213/api/Notification/GetTemplates"
+                                            formControlName="getObjectUrl">
+                                        <label *ngIf="!enableUrl" for="EndDate" class="form-label">&nbsp; Object</label>
+                                        <input *ngIf="!enableUrl" type="text" class="form-control" id="inputphone"
+                                            placeholder="{ 'Name': 'deyner', 'LastName': 'solano', 'InfoPayment': { 'TotalAmount': 4000000 } }"
+                                            formControlName="objectTemplate">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <div class="card">
+                                <form class="row g-3" [formGroup]="programmingInfoForm">
+                                    <div class="col-me-3">
+                                        <br>
+                                        <label for="StarDate" class="form-label">&nbsp; Start Date</label>
+                                        <input type="datetime-local" class="form-control" id="inputStartDate"
+                                            formControlName="startDate">
+                                        <br>
+                                        <label for="EndDate" class="form-label">&nbsp; End Date</label>
+                                        <input type="datetime-local" class="form-control" id="inputEndDate"
+                                            formControlName="endDate">
+                                        <br>
+                                        <span>&nbsp; Active <input type="checkbox" value="true" name="Active"
+                                                formControlName="active" (change)="enableActivationDate($event)"></span>
+                                        <br>
+                                        <br>
+                                            <label for="ActivationTime" class="form-label">&nbsp; Activation
+                                                Date</label>
+                                            <input [disabled]="disableActivation" type="datetime-local" class="form-control" id="inputActivationDate"
+                                                formControlName="activationTime">
+                                        <br>
+                                        <span>&nbsp; Recurring <input type="checkbox" value="true" name="isRecurring"
+                                                formControlName="isRecurring"
+                                                (change)="enableRecurrenceType($event)"></span>
+                                        <br>
+                                        <br>
+                                        <span>&nbsp; Recurrence Type</span>
+                                        <select [disabled]="disableRecurrence" class="form-select" aria-label="Default select example"
+                                            id="inputRecurrence" formControlName="recurrence">
+                                            <option value="0">Hourly</option>
+                                            <option value="1">Diary</option>
+                                            <option value="2">Monthly</option>
+                                            <option value="2">Annual</option>
+                                        </select>
+                                        <br>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-outline-danger" text-al>
+                                    Cancel
+                                </button>
+                                <a>&nbsp;&nbsp;&nbsp;</a>
+                                <button type="submit" class="btn btn-outline-info" text-al> Save
+                                    Notification
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 40px; height: 40px;"></div> <!-- Marcador de posición -->
+</div>
