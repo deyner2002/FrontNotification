@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Template, Channel } from '../../services/communication/communication.model';
+import { Template, Channel, Notification } from '../../services/communication/communication.model';
 import { CommunicationService } from '../../services/communication/communication.service';
 
 @Component({
@@ -16,6 +16,33 @@ export class NotificationComponent implements OnInit {
   disableRecurrence = true;
   file: File | undefined;
   data: any;
+
+  notification: Notification = {
+    isProgrammed: true,
+    programmingInfo: {
+      startDate: new Date(),
+      endDate: new Date(),
+      active: true,
+      activationTime: new Date(),
+      isRecurring: true,
+      recurrence: 0
+    },
+    contactInfo: {
+      type: 0,
+      contactExcelBase64: "",
+      contacts: [{
+        name: "",
+        lastName: "",
+        phone: "",
+        mail: ""
+      }]
+    },
+    templatesIds: [0],
+    getObject: true,
+    getObjectUrl: "",
+    objectTemplate: ""
+  };
+
   notificationForm = new FormGroup({
     isProgrammed: new FormControl('false', Validators.required),
     templateId: new FormControl('', Validators.required),
@@ -41,6 +68,24 @@ export class NotificationComponent implements OnInit {
   })
 
   constructor(private communicationService: CommunicationService) { }
+
+  saveNotification() {
+    if (true) {
+      this.communicationService.saveNotification(this.notification).subscribe(
+        (Response) => {
+          alert("Notification saved successfully!");
+          this.notificationForm.reset();
+          this.programmingInfoForm.reset();
+          this.contactInfoForm.reset();
+          this.file = undefined;
+          return Response;
+        },
+        (error) => {
+          return error;
+        }
+      )
+    }
+  }
 
   ngOnInit(): void {
     this.enableFileExcel = false;
