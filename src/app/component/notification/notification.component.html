@@ -20,16 +20,16 @@
                             <label for="inputType" class="form-label">Contact Type</label>
                             <select class="form-select" aria-label="Default select example" id="inputType"
                                 formControlName="contactType" (change)="enableContactInfo($event)">
-                                <option value="0">Excel file</option>
-                                <option value="1">Specify</option>
+                                <option value=0>Excel file</option>
+                                <option value=1>Specify</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label for="inputType" class="form-label">Programmed</label>
                             <select class="form-select" aria-label="Default select example" id="inputType"
                                 formControlName="isProgrammed" (change)="enableProgrammingInfo($event)">
-                                <option value="true">True</option>
-                                <option value="false">False</option>
+                                <option value=true>True</option>
+                                <option value=false>False</option>
                             </select>
                         </div>
                         <div class="col-lg-8 col-md-8">

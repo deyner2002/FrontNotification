@@ -17,47 +17,22 @@ export class NotificationComponent implements OnInit {
   file: File | undefined;
   data: any;
 
-  notification: Notification = {
-    isProgrammed: true,
-    programmingInfo: {
-      startDate: new Date(),
-      endDate: new Date(),
-      active: true,
-      activationTime: new Date(),
-      isRecurring: true,
-      recurrence: 0
-    },
-    contactInfo: {
-      type: 0,
-      contactExcelBase64: "",
-      contacts: [{
-        name: "",
-        lastName: "",
-        phone: "",
-        mail: ""
-      }]
-    },
-    templatesIds: [0],
-    getObject: true,
-    getObjectUrl: "",
-    objectTemplate: ""
-  };
-
   notificationForm = new FormGroup({
     isProgrammed: new FormControl('false', Validators.required),
     templateId: new FormControl('', Validators.required),
-    contactType: new FormControl('1', Validators.required),
-    getObject: new FormControl('', Validators.required),
+    contactType: new FormControl(1, Validators.required),
+    getObject: new FormControl(false, Validators.required),
     getObjectUrl: new FormControl('', Validators.required),
     objectTemplate: new FormControl('', Validators.required),
   })
+
   programmingInfoForm = new FormGroup({
-    startDate: new FormControl(),
-    endDate: new FormControl(),
-    activationTime: new FormControl(),
-    active: new FormControl('', Validators.required),
-    isRecurring: new FormControl('', Validators.required),
-    recurrence: new FormControl(),
+    startDate: new FormControl(new Date().toISOString().substring(0, 10), Validators.required),
+    endDate: new FormControl(new Date().toISOString().substring(0, 10), Validators.required),
+    activationTime: new FormControl(new Date().toISOString().substring(0, 10), Validators.required),
+    active: new FormControl(false, Validators.required),
+    isRecurring: new FormControl(false, Validators.required),
+    recurrence: new FormControl(0),
   })
 
   contactInfoForm = new FormGroup({
@@ -71,7 +46,32 @@ export class NotificationComponent implements OnInit {
 
   saveNotification() {
     if (true) {
-      this.communicationService.saveNotification(this.notification).subscribe(
+      const notification = {
+        isProgrammed: this.notificationForm.value.isProgrammed == "false" ? false : true ,
+        programmingInfo: {
+          startDate: this.programmingInfoForm.value.startDate,
+          endDate: this.programmingInfoForm.value.endDate,
+          active: this.programmingInfoForm.value.active,
+          activationTime: this.programmingInfoForm.value.activationTime,
+          isRecurring: this.programmingInfoForm.value.isRecurring,
+          recurrence: this.programmingInfoForm.value.recurrence
+        },
+        contactInfo: {
+          type: this.notificationForm.value.contactType,
+          contactExcelBase64: "",
+          contacts: [{
+            name: this.contactInfoForm.value.name,
+            lastName: this.contactInfoForm.value.name,
+            phone: this.contactInfoForm.value.phone,
+            mail: this.contactInfoForm.value.email
+          }]
+        },
+        templatesIds: [this.notificationForm.value.templateId],
+        getObject: this.notificationForm.value.getObject,
+        getObjectUrl: this.notificationForm.value.getObjectUrl,
+        objectTemplate: this.notificationForm.value.objectTemplate
+      };
+      this.communicationService.saveNotification(notification).subscribe(
         (Response) => {
           alert("Notification saved successfully!");
           this.notificationForm.reset();

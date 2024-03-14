@@ -18,8 +18,8 @@ export class CommunicationService {
     return this.http.post<any>(`${this.API_URL}SaveTemplate?Name=${formData.Name}&Sender=${formData.From}&Channel=${formData.Type}&Subject=${formData.Subject}&attachments=${formData.Attachments}`, fileData);
   };
 
-  saveNotification(notification: Notification): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}SaveNotification`, notification);
+  saveNotification(data: any): Observable<any> {
+    return this.http.post<any>(`${this.API_URL}SaveNotification`, data);
   };
 
   editTemplate(formData: any,file: File): Observable<any> {
