@@ -88,7 +88,7 @@ export class TemplateComponent implements OnInit {
         response => {
         },
         error => {
-          console.error("Error al eliminar el template:", error);
+          console.error("Error when deleting the template:", error);
         }
       );
       const index = this.templates.findIndex(template => template.numberId === numberId);
@@ -175,10 +175,10 @@ export class TemplateComponent implements OnInit {
       if (ventanaEmergente) {
         ventanaEmergente.document.write(this.templateEdit.body);
       } else {
-        console.error('No se pudo abrir la ventana emergente.');
+        console.error('The popup could not be opened.');
       }
     } else {
-      console.error('El código HTML es nulo.');
+      console.error('The HTML code is null.');
     }
   }
 

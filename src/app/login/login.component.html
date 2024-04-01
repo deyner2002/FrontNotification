@@ -1,4 +1,4 @@
-<section class="vh-100" style="background-color: #609266;">
+<section style="background-color: #609266;">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-xl-10">
@@ -8,7 +8,7 @@
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
                                 alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
                         </div>
-                        <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                        <div *ngIf="showLogin" class="col-md-6 col-lg-7 d-flex align-items-center">
                             <div class="card-body p-4 p-lg-5 text-black">
                                 <form [formGroup]="loginForm">
 
@@ -50,6 +50,73 @@
                                     </div>
                                     <button type="submit" (click)="login()" class="btn btn-outline-info">Submit</button>
                                     <br>
+                                    <div class="text-center mt-3">
+                                        <span>¿No tienes una cuenta? </span>
+                                        <a href="#" (click)="openRegister($event)">Register</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div *ngIf="showRegister" class="col-md-6 col-lg-7 d-flex align-items-center">
+                            <div class="card-body p-4 p-lg-5 text-black">
+                                <form [formGroup]="registerForm">
+
+                                    <div class="d-flex align-items-center mb-3 pb-1">
+                                        <img src="./assets/images/logos/logo pequeño.png">
+                                        <span class="h1 fw-bold mb-0">Notifications Service</span>
+                                    </div>
+
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Register account
+                                    </h5>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail2" class="form-label">Email address</label>
+                                        <input formControlName="email" placeholder="example@example.com" type="email"
+                                            class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">
+
+                                        <div *ngIf="emailR.invalid && (emailR.dirty || emailR.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="emailR.errors?.['required']">
+                                                Email is required
+                                            </div>
+                                            <div *ngIf="emailR.errors?.['email']">
+                                                The email must have a valid format
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                        <input formControlName="password" type="password" class="form-control"
+                                            id="exampleInputPassword1">
+
+                                        <div *ngIf="passwordR.invalid && (passwordR.dirty || passwordR.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="passwordR.errors?.['required']">
+                                                Password is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputAccountType" class="form-label">AccountType</label>
+                                        <select class="form-select" aria-label="Default select example" id="inputType"
+                                            formControlName="accountType">
+                                            <option value="Free">Free</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Premium">Premium</option>
+                                        </select>
+                                        <div *ngIf="accountTypeR.invalid" class="text-danger">
+                                            <div *ngIf="accountTypeR.errors?.['required']">
+                                                Account Type is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" (click)="register()"
+                                        class="btn btn-outline-info">Register</button>
+                                    <button type="submit" (click)="openLogin($event)"
+                                        class="btn btn-outline-danger">Cancel</button>
+                                    <br>
+
                                 </form>
                             </div>
                         </div>
