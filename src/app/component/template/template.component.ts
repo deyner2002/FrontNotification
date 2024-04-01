@@ -4,6 +4,7 @@ import { Template, Channel } from '../../services/communication/communication.mo
 import { CommunicationService } from '../../services/communication/communication.service';
 import { Router } from '@angular/router';
 import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
+import {AccountService} from '../../services/account/account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RendermodalComponent } from '../rendermodal/rendermodal.component';
 
@@ -37,6 +38,7 @@ export class TemplateComponent implements OnInit {
     private router: Router,
     /*, public dialog: MatDialog*/
     private config: NgbPaginationConfig,
+    private accountService: AccountService
   ) {
     config.pageSize = this.itemsPerPage;
   }
@@ -45,7 +47,14 @@ export class TemplateComponent implements OnInit {
     this.showTable = true;
     this.showEdit = false;
     this.showCreate = false;
+    this.validarPermisos();
     this.getTemplates(this.page);
+  }
+
+  validarPermisos(): void {
+    const userAccount = this.accountService.getUserAccountFromStorage();
+    console.log(userAccount);
+    console.log(userAccount.accountType);
   }
 
   getTemplates(page: number) {

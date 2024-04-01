@@ -75,6 +75,14 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(credentials).subscribe(
       response => {
         localStorage.setItem('userId', response);
+        this.accountService.GetUserAccount(response).subscribe(
+          (data) => {
+            this.accountService.saveUserData(data); 
+          },
+          (error) => {
+            console.error('Error al obtener los datos del usuario:', error);
+          }
+        );
         this.router.navigateByUrl('dashboard');
       this.loginForm.reset();
       },

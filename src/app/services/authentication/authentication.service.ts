@@ -20,9 +20,6 @@ export class AuthenticationService {
   }
 
   logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('expiresIn');
-    localStorage.removeItem('tokenType');
+    localStorage.clear();
   }
 }
