@@ -20,7 +20,7 @@
                             <label for="inputType" class="form-label">Contact Type</label>
                             <select class="form-select" aria-label="Default select example" id="inputType"
                                 formControlName="contactType" (change)="enableContactInfo($event)">
-                                <option value=0>Excel file</option>
+                                <option *ngIf="!isFree" value=0>Excel file</option>
                                 <option value=1>Specify</option>
                             </select>
                         </div>
@@ -28,7 +28,7 @@
                             <label for="inputType" class="form-label">Programmed</label>
                             <select class="form-select" aria-label="Default select example" id="inputType"
                                 formControlName="isProgrammed" (change)="enableProgrammingInfo($event)">
-                                <option value=true>True</option>
+                                <option *ngIf="!isFree" value=true>True</option>
                                 <option value=false>False</option>
                             </select>
                         </div>
@@ -61,25 +61,30 @@
                                 </form>
                             </div>
                             <div class="card">
-                                <div class="col-me-3">
-                                    <div>
-                                        <br>
-                                        <span>&nbsp; Api Rest - Get method <input type="checkbox" value="true"
-                                                name="isRecurring" formControlName="getObject"
-                                                (change)="enableUrlObject($event)"></span>
-                                        <br>
-                                        <p></p>
-                                        <label *ngIf="enableUrl" for="StarDate" class="form-label">&nbsp; Url</label>
-                                        <input *ngIf="enableUrl" type="text" class="form-control" id="inputgetObjectUrl"
-                                            placeholder="https://localhost:7213/api/Notification/GetTemplates"
-                                            formControlName="getObjectUrl">
-                                        <label *ngIf="!enableUrl" for="EndDate" class="form-label">&nbsp; Object</label>
-                                        <input *ngIf="!enableUrl" type="text" class="form-control" id="inputphone"
-                                            placeholder="{ 'Name': 'deyner', 'LastName': 'solano', 'InfoPayment': { 'TotalAmount': 4000000 } }"
-                                            formControlName="objectTemplate">
-                                        <br>
+                                <form class="row g-3" [formGroup]="externalIntegrationForm">
+                                    <div class="col-me-3">
+                                        <div>
+                                            <br>
+                                            <span>&nbsp; Api Rest - Get method <input type="checkbox" value="true"
+                                                    name="isRecurring" formControlName="getObject"
+                                                    (change)="enableUrlObject($event)"></span>
+                                            <br>
+                                            <p></p>
+                                            <label *ngIf="enableUrl" for="StarDate" class="form-label">&nbsp;
+                                                Url</label>
+                                            <input *ngIf="enableUrl" type="text" class="form-control"
+                                                id="inputgetObjectUrl"
+                                                placeholder="https://localhost:7213/api/Notification/GetTemplates"
+                                                formControlName="getObjectUrl">
+                                            <label *ngIf="!enableUrl" for="EndDate" class="form-label">&nbsp;
+                                                Object</label>
+                                            <input *ngIf="!enableUrl" type="text" class="form-control" id="inputphone"
+                                                placeholder="{ 'Name': 'deyner', 'LastName': 'solano', 'InfoPayment': { 'TotalAmount': 4000000 } }"
+                                                formControlName="objectTemplate">
+                                            <br>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4">
@@ -99,25 +104,28 @@
                                                 formControlName="active" (change)="enableActivationDate($event)"></span>
                                         <br>
                                         <br>
-                                            <label for="ActivationTime" class="form-label">&nbsp; Activation
-                                                Date</label>
-                                            <input [disabled]="disableActivation" type="datetime-local" class="form-control" id="inputActivationDate"
-                                                formControlName="activationTime">
+                                        <label for="ActivationTime" class="form-label">&nbsp; Activation
+                                            Date</label>
+                                        <input [disabled]="disableActivation" type="datetime-local" class="form-control"
+                                            id="inputActivationDate" formControlName="activationTime">
                                         <br>
-                                        <span>&nbsp; Recurring <input type="checkbox" value="true" name="isRecurring"
-                                                formControlName="isRecurring"
-                                                (change)="enableRecurrenceType($event)"></span>
-                                        <br>
-                                        <br>
-                                        <span>&nbsp; Recurrence Type</span>
-                                        <select [disabled]="disableRecurrence" class="form-select" aria-label="Default select example"
-                                            id="inputRecurrence" formControlName="recurrence">
-                                            <option value="0">Hourly</option>
-                                            <option value="1">Diary</option>
-                                            <option value="2">Monthly</option>
-                                            <option value="2">Annual</option>
-                                        </select>
-                                        <br>
+                                        <form [formGroup]="recurrenceForm">
+                                            <span>&nbsp; Recurring <input type="checkbox" value="true"
+                                                    name="isRecurring" formControlName="isRecurring"
+                                                    (change)="enableRecurrenceType($event)"></span>
+                                            <br>
+                                            <br>
+                                            <span>&nbsp; Recurrence Type</span>
+                                            <select [disabled]="disableRecurrence" class="form-select"
+                                                aria-label="Default select example" id="inputRecurrence"
+                                                formControlName="recurrence">
+                                                <option value="0">Hourly</option>
+                                                <option value="1">Diary</option>
+                                                <option value="2">Monthly</option>
+                                                <option value="2">Annual</option>
+                                            </select>
+                                            <br>
+                                        </form>
                                     </div>
                                 </form>
                             </div>
@@ -126,7 +134,8 @@
                                     Cancel
                                 </button>
                                 <a>&nbsp;&nbsp;&nbsp;</a>
-                                <button type="submit" class="btn btn-outline-info" text-al (click)="saveNotification()"> Save
+                                <button type="submit" class="btn btn-outline-info" text-al (click)="saveNotification()">
+                                    Save
                                     Notification
                                 </button>
                             </div>

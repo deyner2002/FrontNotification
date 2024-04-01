@@ -27,6 +27,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "@popperjs/core": "^2.11.5",
+    "alife-file-to-base64": "0.0.4",
     "angular-feather": "^6.3.0",
     "angular-notifier": "^11.0.0",
     "apexcharts": "^3.35.3",
